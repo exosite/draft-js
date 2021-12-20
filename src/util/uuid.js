@@ -7,16 +7,16 @@
  */
 
 /*eslint-disable no-bitwise */
-
-/**
- * Based on the rfc4122-compliant solution posted at
- * http://stackoverflow.com/questions/105034
- */
-function uuid(): string {
+ function uuid(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = (Math.random() * 16) | 0;
-    const v = c == 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
+    // Generate a random number from 0 - 16
+    const rand = Math.random() * 16 | 0;
+    if (c === 'x') {
+      // replace all instances of 'x' with 0-9 / a-f
+      return rand.toString(16);
+    }
+    // replace all instances of 'y' with 8-0 / a-b
+    return ((rand & 0x3) | 0x8).toString(16)
   });
 }
 
